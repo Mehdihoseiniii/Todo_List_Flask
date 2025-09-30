@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}داشبورد{% endblock %}
+{% block content %}
+<h2>تسک‌های من</h2>
+
+<form method="POST" class="input-group mb-3">
+  <input name="title" class="form-control" placeholder="تسکی بنویس و Enter بزن..." autocomplete="off">
+  <button class="btn btn-primary">افزودن</button>
+</form>
+
+<ul class="list-group">
+  {% for t in todos %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      <div>
+        {% if t.done %}
+          <s>{{ t.title }}</s>
+        {% else %}
+          {{ t.title }}
+        {% endif %}
+      </div>
+      <div>
+        <a class="btn btn-sm btn-outline-success me-1" href="{{ url_for('toggle', todo_id=t.id) }}">
+          {% if t.done %}انجام‌نشده{% else %}انجام‌شده{% endif %}
+        </a>
+        <a class="btn btn-sm btn-outline-danger" href="{{ url_for('delete', todo_id=t.id) }}">حذف</a>
+      </div>
+    </li>
+  {% else %}
+    <li class="list-group-item">هیچ تسکی وجود ندارد</li>
+  {% endfor %}
+</ul>
+{% endblock %}
